@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'Roboto Mono Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 700;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/roboto-mono:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Roboto Mono Variable, monospace;
+}
+
+a {
+    color: black;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0 1rem;
+}
+
+main {
+    font-weight: 400;
+    flex: 1;
+}
+
+footer {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+.description {
+    font-weight: 300;
+    margin-left: .5rem;
+}
+
+.technologies {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1.5rem;
+}
+
+.technology {
+    color: black;
+    font-size: .9rem;
+    border-radius: .15rem;
+    padding: .25rem .5rem;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transition: color .2s, background-color .2s;
+
+    &.active {
+        color: white;
+        background-color: #181818;
+    }
+}
+
+.projects,
+.projects__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.projects {
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+}
+
+.projects__container-by-year {
+    display: flex;
+    gap: 1rem;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: .9rem;
+    font-weight: 300;
+
+    strong {
+        font-weight: 500;
+    }
+}
+
+.project__title {
+    h2 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin: 0;
+    }
+}
+
+.project__links {
+    .fa-solid {
+        font-size: .6rem;
+        margin-left: .3rem
+    }
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 1.4rem;
+}
+
+.copyright {
+    font-weight: 300;
+    align-self: end;
+}
