@@ -13,6 +13,7 @@ html, body {
 }
 
 body {
+    display: flex;
     font-family: Roboto Mono Variable, monospace;
 }
 
@@ -23,8 +24,10 @@ a {
 .wrapper {
     display: flex;
     flex-direction: column;
+    max-width: 800px;
     min-height: 100vh;
     padding: 0 1rem;
+    margin: 0 auto;
 }
 
 main {
@@ -34,6 +37,7 @@ main {
 
 footer {
     display: flex;
+    justify-content: center;
     gap: 1rem;
     padding: 1rem 0;
 }
@@ -114,14 +118,7 @@ footer {
     }
 }
 
-.social-links {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    font-size: 1.4rem;
-}
-
 .copyright {
-    font-weight: 300;
+    font-weight: 500;
     align-self: end;
 }

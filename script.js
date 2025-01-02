@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         renderCopyright() {
             const currentYear = new Date().getFullYear();
-            document.querySelector(".copyright").textContent = `© ${currentYear} Serhii Illarionov`;
+            document.querySelector(".copyright").textContent = `© ${currentYear}`;
         }
 
         renderExperienceYears() {
