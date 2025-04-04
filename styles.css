@@ -36,10 +36,14 @@ main {
 }
 
 footer {
+    position: sticky;
+    bottom: 0;
     display: flex;
     justify-content: center;
     gap: 1rem;
     padding: 1rem 0;
+    background-color: white;
+    margin-top: 1rem;
 }
 
 .title {
