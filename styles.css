@@ -118,6 +118,10 @@ footer {
         font-size: .6rem;
         margin-left: .3rem
     }
+
+    a.not-available {
+        opacity: 0.5;
+    }
 }
 
 .copyright {

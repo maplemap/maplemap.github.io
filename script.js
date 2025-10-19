@@ -52,6 +52,7 @@ const projects = [
             stack: ['HTML', 'CSS', 'Next.js', 'Typescript', 'Socket IO', 'WebRTC', 'Node.js', 'Express.js']
         },
         year: 2025,
+        demoHealthCheck: true
     }
 ]
 
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
             this.projects = projects;
             this.filterValue = [];
             this.filteredProjects = projects;
+            this.healthcheckIntervals = {};
         }
 
         init() {
@@ -76,6 +78,43 @@ document.addEventListener("DOMContentLoaded", function() {
                 return this.filterValue.every(technology => technologies.stack.includes(technology));
             });
             this.renderProjects();
+        }
+
+        isLinkAvailable(url) {
+            return fetch(url, { method: 'HEAD', mode: 'no-cors' })
+                .then(() => true)
+                .catch(() => false);
+        }
+
+        setupHealthcheck(linkEl, url, projectId) {
+            const check = async () => {
+                try {
+                    const isAvailable = await this.isLinkAvailable(url);
+                    if (isAvailable) {
+                        linkEl.classList.remove('not-available');
+                        linkEl.title = '';
+                        linkEl.setAttribute('href', url);
+                    } else {
+                        linkEl.classList.add('not-available');
+                        linkEl.title = 'Not available now. Please try later';
+                        linkEl.removeAttribute('href');
+                    }
+                } catch (err) {
+                    console.error('Healthcheck error:', err);
+                }
+            };
+
+            check();
+            this.healthcheckIntervals[projectId] = setInterval(check, 5000);
+        }
+
+        stopHealthcheck(projectId) {
+            clearInterval(this.healthcheckIntervals[projectId]);
+            delete this.healthcheckIntervals[projectId];
+        }
+
+        getProjectId(project) {
+            return `project-${project.year}-${project.title.replace(/\s+/g, '-').toLowerCase()}`;
         }
 
         renderCopyright() {
@@ -114,6 +153,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         renderProjects() {
+            const getProjectLinksHTML = (project, projectId) => {
+                const { links } = project;
+
+                return `
+                    <div class="project__links">
+                        <strong>Links:</strong>
+                        ${Object.keys(links).map((key) => {
+                                const url = links[key];
+                                const linkId = `${projectId}-${key}`;
+                                return `
+                                    <a id="${linkId}" href="${url}" target="_blank">${key}<i class="fa-solid fa-up-right-from-square"></i></a>
+                                `;
+                            }).join(', ')}
+                    </div>
+                `;
+            }
+
             const projectContainer = document.querySelector(".projects");
             const remapByYear = this.filteredProjects.reduce((acc, project) => {
                 acc[project.year] = acc[project.year] || [];
@@ -128,31 +184,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (sortedByYear.length > 0) {
                 sortedByYear.forEach(({year, projects}) => {
-                    const getProjectLinksHTML = (links) => `
-                        <div class="project__links">
-                            <strong>Links:</strong>
-                            ${Object.keys(links)
-                                .filter(key => links[key])
-                                .map(key => `<a href="${links[key]}" target="_blank">${key}<i class="fa-solid fa-up-right-from-square"></i></a>`
-                                ).join(', ')
-                            }
-                        </div>
-                    `
-
                     projectsHtml += `
                         <div class="projects__container-by-year">
                             <div>${year}</div>
                             <div class="projects__list">
-                                ${projects.map(({title, description, links, technologies}) => `
+                                ${projects.map(project => `
                                     <div class="project">
-                                        <div class="project__title"><h2>${title}</h2></div>
-                                        <div class="project__description">${description}</div>
+                                        <div class="project__title"><h2>${project.title}</h2></div>
+                                        <div class="project__description">${project.description}</div>
                                         <div>
                                             <div class="project__technologies">
                                                 <strong>Techologies:</strong>
-                                                ${technologies.stack.join(', ')}
+                                                ${project.technologies.stack.join(', ')}
                                             </div>
-                                            ${getProjectLinksHTML(links)}
+                                            ${getProjectLinksHTML(project, this.getProjectId(project))}
                                         </div>
                                     </div>
                                 `).join('')}
@@ -165,6 +210,16 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             projectContainer.innerHTML = projectsHtml;
+
+            this.filteredProjects.forEach(project => {
+                if (!project.demoHealthCheck) return;
+                const id = this.getProjectId(project);
+                const demoUrl = project.links?.demo;
+                if (demoUrl) {
+                    const linkEl = document.getElementById(`${id}-demo`);
+                    if (linkEl) this.setupHealthcheck(linkEl, demoUrl, id);
+                }
+            });
         }
     }
 
