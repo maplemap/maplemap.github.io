@@ -40,20 +40,20 @@ const projects = [
         },
         year: 2024,
     },
-    {
-        title: 'Video Chat',
-        description: 'Video Chat with Next.js, Typescript, SocketIO, WebRTC',
-        links: {
-            source: 'https://github.com/maplemap/video-chat-nextjs-webrtc',
-            demo: 'https://videochat.maplemap.space/'
-        },
-        technologies: {
-            main: 'React',
-            stack: ['HTML', 'CSS', 'Next.js', 'Typescript', 'Socket IO', 'WebRTC', 'Node.js', 'Express.js']
-        },
-        year: 2025,
-        demoHealthCheck: true
-    }
+    // {
+    //     title: 'Video Chat',
+    //     description: 'Video Chat with Next.js, Typescript, SocketIO, WebRTC',
+    //     links: {
+    //         source: 'https://github.com/maplemap/video-chat-nextjs-webrtc',
+    //         demo: 'https://videochat.maplemap.space/'
+    //     },
+    //     technologies: {
+    //         main: 'React',
+    //         stack: ['HTML', 'CSS', 'Next.js', 'Typescript', 'Socket IO', 'WebRTC', 'Node.js', 'Express.js']
+    //     },
+    //     year: 2025,
+    //     demoHealthCheck: true
+    // }
 ]
 
 document.addEventListener("DOMContentLoaded", function() {
